@@ -7,7 +7,14 @@ matrix:
   allow_failures:
     - rust: nightly
   fast_finish: true
+  include:
+    - rust: nightly
+      script:
+      - cargo clippy --all
 cache: cargo
+before_script:
+  - rustup component add rustfmt-preview
 script:
   - cargo build --verbose --all
   - cargo test --verbose --all
+  - cargo fmt --all -- --check
